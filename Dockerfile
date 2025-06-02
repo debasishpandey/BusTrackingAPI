@@ -1,14 +1,12 @@
-# Use an OpenJDK base image
-FROM openjdk:17-jdk-slim
-
-# Set the working directory
+# Stage 1: Build
+FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy built jar file into the container
-COPY target/*.jar app.jar
-
-# Expose the port Render uses
+# Stage 2: Run
+FROM openjdk:17
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Run the jar file
 ENTRYPOINT ["java", "-jar", "app.jar"]
