@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface BusServiceInterface {
     Bus saveBus(Bus bus);
-    Optional<Bus> getBusById(int id);
+    Optional<Bus> getBusById(long id);
     List<Bus> getAllBuses();
     void deleteBus(Bus bus);
     Bus updateBus(Bus bus);

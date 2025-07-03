@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.trackit.bustracking.Service.DriverServiceInterface;
 import org.trackit.bustracking.model.Driver;
 import org.trackit.bustracking.repository.DriverRepo;
+import org.trackit.bustracking.utill.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +22,9 @@ public class DriverService implements DriverServiceInterface {
 
     @Override
     public Driver saveDriver(Driver driver) {
-        return driverRepo.save(driver);
+
+       driver.setPassword(PasswordEncoder.encode(driver.getPassword()));
+       return driverRepo.save(driver);
     }
 
     @Override
@@ -47,5 +50,14 @@ public class DriverService implements DriverServiceInterface {
     @Override
     public Driver updateDriver(Driver driver) {
         return driverRepo.save(driver);
+    }
+
+    public boolean checkPassword(String password,String username) {
+        Optional<Driver> f= driverRepo.findByUsername(username);
+        if(f.isPresent()){
+            return PasswordEncoder.checkPassword(password,f.get().getPassword());
+        }
+        System.out.println(username);
+        return false;
     }
 }

@@ -3,8 +3,11 @@ package org.trackit.bustracking.ServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.trackit.bustracking.Service.StudentServiceInterface;
+import org.trackit.bustracking.model.Bus;
 import org.trackit.bustracking.model.Student;
+import org.trackit.bustracking.model.UserCredentials;
 import org.trackit.bustracking.repository.StudentRepo;
+import org.trackit.bustracking.utill.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +24,21 @@ public class StudentService implements StudentServiceInterface {
 
     @Override
     public Student saveStudent(Student student) {
+        student.setPassword(PasswordEncoder.encode(student.getPassword()));
         return studentRepo.save(student);
+    }
+    public boolean checkPassword(String password,String username) {
+            Optional<Student> student=studentRepo.findByUsername(username);
+
+            if(student.isPresent()){
+
+                return PasswordEncoder.checkPassword(password,student.get().getPassword());
+            }
+        return false;
+    }
+
+    public  Optional<Student> getStudentByRegistrationNumber(String registrationNumber) {
+        return  studentRepo.findById(registrationNumber);
     }
 
     @Override
@@ -49,5 +66,14 @@ public class StudentService implements StudentServiceInterface {
         return studentRepo.save(updatedStudent) ;
     }
 
+    public Bus getAssignedBus(String registrationNo) {
+        Optional<Bus> bus = Optional.ofNullable(studentRepo.findBusByStudentRegistrationNo(registrationNo));
+        return bus.get();
+    }
+
+    public Student getStudentByEmail(String email) {
+        Optional<Student> student = studentRepo.findByEmail(email);
+        return student.get();
+    }
 
 }

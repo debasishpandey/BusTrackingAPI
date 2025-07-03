@@ -6,6 +6,6 @@ import org.trackit.bustracking.model.Bus;
 
 import java.util.Optional;
 @Repository
-public interface BusRepo extends JpaRepository<Bus, Integer> {
+public interface BusRepo extends JpaRepository<Bus, Long> {
 
 }

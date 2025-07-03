@@ -22,6 +22,4 @@ public class Location {
 
     private LocalDateTime updatedAt;
 
-
-
 }

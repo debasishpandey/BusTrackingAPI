@@ -9,7 +9,7 @@ import org.trackit.bustracking.model.Location;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Location")
+@RequestMapping("/location")
 public class LocationController {
     LocationService locationService;
     @Autowired

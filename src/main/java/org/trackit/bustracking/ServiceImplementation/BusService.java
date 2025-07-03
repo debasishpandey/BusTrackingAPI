@@ -24,7 +24,7 @@ public class BusService implements BusServiceInterface {
     }
 
     @Override
-    public Optional<Bus> getBusById(int id) {
+    public Optional<Bus> getBusById(long id) {
         return busRepo.findById(id);
     }
 
