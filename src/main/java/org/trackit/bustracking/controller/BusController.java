@@ -1,11 +1,13 @@
 package org.trackit.bustracking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.trackit.bustracking.ServiceImplementation.BusService;
 import org.trackit.bustracking.model.Bus;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +32,13 @@ public class BusController {
     @GetMapping("/{id}")
     public Optional<Bus> getBus(@PathVariable int id) {
         return busService.getBusById(id);
+    }
+    @PutMapping("/update-location/{driverUsername}")
+    public ResponseEntity<Bus> updateBusLocation(@PathVariable String driverUsername, @RequestBody Map<String, Double> location) {
+        double lat = location.get("latitude");
+        double lon = location.get("longitude");
+        Bus updatedBus = busService.updateBusLocation(driverUsername, lat, lon);
+        return ResponseEntity.ok(updatedBus);
     }
 
 
