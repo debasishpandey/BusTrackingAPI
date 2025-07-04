@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/bus")
-@CrossOrigin(origins = "*")
 public class BusController {
     @Autowired
     BusService busService;
