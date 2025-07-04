@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.trackit.bustracking.ServiceImplementation.BusService;
 import org.trackit.bustracking.model.Bus;
+import org.trackit.bustracking.model.Student;
+import org.trackit.bustracking.repository.BusRepo;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,9 @@ import java.util.Optional;
 public class BusController {
     @Autowired
     BusService busService;
+
+    @Autowired
+    BusRepo busRepo;
 
     @GetMapping("all")
     public List<Bus> getBuses() {
@@ -41,5 +46,25 @@ public class BusController {
         return ResponseEntity.ok(updatedBus);
     }
 
+    @GetMapping("/{busId}/students")
+    public ResponseEntity<List<Student>> getStudentsByBusId(@PathVariable Long busId) {
+        Optional<Bus> busOpt = busRepo.findById(busId);
+        if (busOpt.isPresent()) {
+            List<Student> students = busOpt.get().getStudents();
+            return ResponseEntity.ok(students);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteBus(@PathVariable int id) {
+
+
+
+            busService.deleteById(id);
+
+
+        return ResponseEntity.noContent().build();
+    }
 }

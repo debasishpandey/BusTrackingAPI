@@ -1,6 +1,7 @@
 package org.trackit.bustracking.ServiceImplementation;
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.trackit.bustracking.Service.BusServiceInterface;
@@ -54,5 +55,8 @@ public class BusService implements BusServiceInterface {
         bus.setLongitude(longitude);
         return busRepo.save(bus);
     }
-
+    @Transactional
+    public void deleteById(int id) {
+        busRepo.deleteById(id);
+    }
 }

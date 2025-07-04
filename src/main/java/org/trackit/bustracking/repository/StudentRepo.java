@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.trackit.bustracking.model.Bus;
 import org.trackit.bustracking.model.Student;
 
+import java.util.List;
 import java.util.Optional;
 @Repository
 public interface StudentRepo extends JpaRepository<Student, String> {
@@ -14,5 +15,7 @@ public interface StudentRepo extends JpaRepository<Student, String> {
     @Query("SELECT s.assignedBus FROM Student s WHERE s.registrationNo = :regNo")
     Bus findBusByStudentRegistrationNo(@Param("regNo") String registrationNo);
     Optional<Student> findByEmail(String email);
+    List<Student> findByAssignedBus(Bus bus);
+
 
 }

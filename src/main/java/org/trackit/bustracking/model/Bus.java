@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class Bus {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String busNumber;
+    @Setter
     @OneToOne
     @JoinColumn(name = "driver_id", nullable = true)
     @JsonIgnoreProperties("bus") // prevent recursion when serializing bus
@@ -44,4 +46,5 @@ public class Bus {
     public Boolean getStatus() {
         return this.status;
     }
+
 }

@@ -9,6 +9,7 @@ import org.trackit.bustracking.ServiceImplementation.DriverService;
 import org.trackit.bustracking.model.Bus;
 import org.trackit.bustracking.model.Driver;
 import org.trackit.bustracking.model.UserCredentials;
+import org.trackit.bustracking.utill.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,9 @@ public class DriverController {
     }
 
     @PostMapping("/register")
-    public Driver Register(@RequestBody Driver driver) {
+    public Driver Register(@RequestBody Driver driver)
+    {
+        driver.setPassword(PasswordEncoder.encode(driver.getPassword()));
         return driverService.saveDriver(driver);
     }
 

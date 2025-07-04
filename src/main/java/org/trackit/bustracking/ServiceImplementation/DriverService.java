@@ -23,7 +23,7 @@ public class DriverService implements DriverServiceInterface {
     @Override
     public Driver saveDriver(Driver driver) {
 
-       driver.setPassword(PasswordEncoder.encode(driver.getPassword()));
+
        return driverRepo.save(driver);
     }
 

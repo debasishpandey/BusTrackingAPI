@@ -24,7 +24,7 @@ public class StudentService implements StudentServiceInterface {
 
     @Override
     public Student saveStudent(Student student) {
-        student.setPassword(PasswordEncoder.encode(student.getPassword()));
+
         return studentRepo.save(student);
     }
     public boolean checkPassword(String password,String username) {
@@ -75,5 +75,13 @@ public class StudentService implements StudentServiceInterface {
         Optional<Student> student = studentRepo.findByEmail(email);
         return student.get();
     }
+    public Student updateLocation(String username, double latitude, double longitude) {
+        Student student = studentRepo.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        student.setLatitude(latitude);
+        student.setLongitude(longitude);
+        return studentRepo.save(student);
+    }
+
 
 }

@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface BusRepo extends JpaRepository<Bus, Long> {
 
+    void deleteById(int id);
 }
